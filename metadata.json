@@ -1,0 +1,6 @@
+{
+  "name": "NetVault",
+  "description": "Kalkulator IP Subnet Profesional, Private Vault Terenkripsi, App Vault, dan Cloud Sync Privat Tanpa SQL.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

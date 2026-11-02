@@ -1,0 +1,706 @@
+MASTER PROMPT GEMINI — APLIKASI ANDROID KALKULATOR IP + PRIVATE VAULT + APP VAULT
+
+1. PERAN DAN TUJUAN UTAMA
+
+Bertindaklah sebagai senior Android engineer, software architect, UI/UX designer, backend engineer, dan application security engineer.
+
+Saya ingin mengembangkan aplikasi Android yang siap diuji, dipelihara, dan dipublikasikan ke pengguna. Aplikasi ini awalnya memiliki fungsi utama sebagai kalkulator IP subnet seperti:
+
+https://www.calculator.net/ip-subnet-calculator.html
+
+Namun, aplikasi harus dikembangkan menjadi aplikasi multifungsi dengan Private Vault, App Vault, penyimpanan cloud privat, autentikasi biometrik, pengaturan aplikasi jarak jauh, serta sistem pemantauan penggunaan yang terintegrasi langsung ke dalam Ruang Rahasia.
+
+Fokus utama hanya aplikasi Android dan sistem backend yang benar-benar dibutuhkan aplikasi. HAPUS WEBSITE ADMIN, DASHBOARD ADMIN BERBASIS BROWSER, DAN SELURUH FITUR YANG KHUSUS DIPERUNTUKKAN UNTUK WEBSITE.
+
+Semua pengaturan yang diperlukan harus tersedia di dalam aplikasi melalui Ruang Rahasia. Jika membutuhkan backend untuk autentikasi, sinkronisasi, penyimpanan cloud, konfigurasi global, dan statistik pengguna, buatlah backend API yang bekerja di belakang aplikasi tanpa perlu website admin.
+
+Jangan hanya menghasilkan mockup, UI statis, demo, atau tombol yang tidak berfungsi. Bangun implementasi nyata, jelaskan batasan teknisnya, dan prioritaskan kestabilan serta keamanan.
+
+2. ATURAN TEKNIS WAJIB
+
+1. Platform utama: Android.
+2. Pilih teknologi native yang stabil dan cocok untuk aplikasi Android modern, dengan preferensi Kotlin dan Jetpack Compose. Jika memilih teknologi lain, jelaskan alasannya.
+3. Gunakan arsitektur modular agar setiap fitur mudah dikembangkan, diuji, dan diperbaiki.
+4. Buat backend API hanya untuk fungsi yang memang membutuhkan server, terutama autentikasi username, konfigurasi global, statistik penggunaan, dan penyimpanan cloud.
+5. Jangan membuat website admin.
+6. Jangan menggunakan database SQL dalam bentuk apa pun: MySQL, MariaDB, PostgreSQL, SQLite, atau sejenisnya.
+7. Untuk metadata backend, konfigurasi, akun, sesi, dan statistik sederhana, gunakan penyimpanan berbasis berkas JSON yang aman, dengan penguncian berkas, penulisan atomik, validasi, pencadangan, dan penanganan konflik.
+8. Untuk penyimpanan file berukuran besar, gunakan object storage privat atau sistem penyimpanan file yang sesuai. Jangan memasukkan seluruh isi foto, video, atau dokumen ke dalam JSON.
+9. Jangan mengklaim penyimpanan cloud tidak terbatas atau gratis selamanya. Periksa batas hosting dan layanan yang dipilih.
+10. Jangan menaruh token rahasia, kredensial backend, atau token bot pada source APK yang dapat diekstrak.
+11. Jangan mengarang fungsi yang tidak didukung Android.
+12. Semua fitur wajib memiliki implementasi, status dukungan, penanganan kesalahan, dan pengujian yang jelas.
+13. Jangan menghapus fitur yang sudah bekerja tanpa alasan teknis yang jelas.
+14. Jangan menampilkan tombol yang seolah berfungsi jika implementasinya belum tersedia. Tandai fitur yang belum didukung secara jujur.
+15. Pertahankan privasi pengguna dan patuhi kebijakan distribusi Android serta Google Play jika aplikasi akan dipublikasikan di sana.
+
+3. KONSEP APLIKASI
+
+Aplikasi mempunyai dua bagian utama.
+
+A. Tampilan utama
+
+Tampilan utama berisi kalkulator IP subnet yang profesional, cepat, akurat, dan mudah digunakan.
+
+B. Ruang Rahasia
+
+Ruang Rahasia adalah pusat fitur privat aplikasi. Di dalamnya terdapat pengelolaan file, App Vault, autentikasi biometrik, profil, pengaturan tampilan, sinkronisasi cloud, riwayat aktivitas, statistik penggunaan, serta pengaturan global aplikasi.
+
+Akses ke Ruang Rahasia harus dilindungi oleh mekanisme autentikasi yang nyata. Jangan hanya menggunakan halaman tersembunyi tanpa perlindungan keamanan.
+
+4. FITUR KALKULATOR IP SUBNET
+
+Buat kalkulator jaringan yang benar-benar akurat, dengan fitur:
+
+- Input alamat IPv4 dan CIDR atau subnet mask.
+- Subnet mask dan wildcard mask.
+- Network address dan broadcast address.
+- First usable IP dan last usable IP.
+- Total alamat IP dan jumlah host yang dapat digunakan.
+- Representasi biner setiap oktet.
+- Konversi biner dan desimal.
+- Rentang alamat IP.
+- Informasi kelas alamat IPv4, dengan penjelasan bahwa classful addressing merupakan konsep historis.
+- Informasi alamat private, public, loopback, link-local, dan alamat khusus yang relevan.
+- Perhitungan VLSM dan pembagian subnet.
+- Validasi alamat IP dan input yang salah.
+- Riwayat perhitungan yang dapat dicari, dihapus, dan disalin.
+- Tombol salin hasil dan bagikan hasil.
+- Dukungan IPv6 jika dapat diimplementasikan secara akurat.
+- Tampilan hasil yang mudah dibaca, termasuk tabel dan representasi biner.
+
+Pastikan prefix /0 hingga /32 ditangani dengan benar, termasuk perilaku khusus /31 dan /32. Jangan menggunakan rumus jumlah host yang sama secara membabi buta untuk semua prefix.
+
+Sediakan contoh pengujian otomatis untuk hasil perhitungan.
+
+5. LOGIN MENGGUNAKAN USERNAME
+
+Aplikasi mewajibkan pengguna memasukkan username saat pertama kali menggunakan aplikasi.
+
+Alurnya:
+
+1. Pengguna membuka aplikasi.
+2. Pengguna memasukkan username yang valid.
+3. Sistem memeriksa username melalui backend jika koneksi tersedia.
+4. Sistem mendaftarkan pengguna baru atau mengenali pengguna yang telah terdaftar.
+5. Sistem menampilkan persetujuan privasi dan penjelasan data yang dikumpulkan.
+6. Pengguna masuk ke aplikasi.
+7. Pengguna dapat mengaktifkan biometrik untuk membuka Ruang Rahasia.
+
+Ketentuan:
+
+- Jangan meminta password jika memang desain autentikasi menggunakan username saja, tetapi jelaskan bahwa username bukan bukti identitas dan tidak memberikan keamanan akun yang kuat.
+- Jangan menganggap username sebagai autentikasi yang tahan penyamaran.
+- Untuk melindungi akun dan data cloud, gunakan mekanisme tambahan seperti kunci perangkat, kredensial berbasis perangkat, atau autentikasi tambahan yang sesuai.
+- Cegah pengguna mengakses file milik pengguna lain hanya dengan mengganti username atau ID.
+- Username harus divalidasi dan memiliki aturan panjang serta karakter.
+- Sediakan penanganan username duplikat dan pemulihan akses.
+- Sediakan mode offline yang jelas jika memungkinkan, dengan batasan fitur cloud dan statistik.
+- Jangan menghapus file lokal pengguna hanya karena server sedang tidak tersedia.
+
+Jangan menggunakan fingerprint perangkat sebagai satu-satunya identitas akun. Jangan mengumpulkan nomor telepon, kontak, lokasi, atau informasi pribadi lain jika tidak diperlukan.
+
+6. PEMANTAUAN PENGGUNA DI RUANG RAHASIA
+
+Tambahkan menu khusus bernama Statistik dan Aktivitas Pengguna yang hanya dapat dibuka oleh administrator yang telah terautentikasi dan memiliki izin yang benar.
+
+Saya ingin melihat informasi penggunaan aplikasi secara detail, misalnya:
+
+- Jumlah pengguna terdaftar.
+- Jumlah pengguna aktif harian, mingguan, dan bulanan.
+- Username pengguna.
+- Waktu pendaftaran.
+- Waktu terakhir aktif.
+- Versi aplikasi.
+- Jenis perangkat dan versi Android jika diperlukan untuk dukungan teknis.
+- Aktivitas penggunaan fitur secara agregat.
+- Jumlah perhitungan subnet.
+- Aktivitas upload dan download.
+- Penggunaan penyimpanan cloud.
+- Status sinkronisasi.
+- Riwayat login dan kegagalan autentikasi.
+- Riwayat perubahan pengaturan penting.
+- Alamat IP publik yang terlihat oleh backend pada saat permintaan, jika memang diperlukan untuk keamanan dan diagnostik.
+- Waktu aktivitas berdasarkan zona waktu yang jelas.
+- Grafik aktivitas pengguna dan tren penggunaan.
+
+Untuk setiap kategori data, jelaskan tujuan, masa penyimpanan, dan siapa yang dapat mengaksesnya.
+
+Ketentuan privasi:
+
+- Jangan mengklaim alamat IP perangkat selalu sama. IP dapat berubah dan alamat yang terlihat server mungkin merupakan IP VPN, proxy, atau gateway jaringan.
+- Jangan merekam setiap aktivitas pribadi pengguna secara diam-diam.
+- Jangan merekam isi file, foto, video, dokumen, password, token, atau isi Ruang Rahasia ke log analitik.
+- Terapkan minimisasi data, pembatasan akses, masa retensi, dan penghapusan data.
+- Tampilkan informasi pengumpulan data secara transparan.
+- Sediakan statistik agregat untuk analisis penggunaan.
+- Jangan menampilkan data seluruh pengguna kepada pengguna biasa.
+
+Hak akses administrator
+
+Buat mekanisme administrator yang terpisah dan aman. Jangan menjadikan username tertentu atau tombol tersembunyi sebagai satu-satunya bukti administrator.
+
+Gunakan peran dan izin yang divalidasi oleh backend. Pengaturan administrator harus tetap terlindungi walaupun APK dimodifikasi.
+
+Jika akses administrator dibuat melalui akun pemilik, sediakan proses penetapan pemilik yang aman dan jangan menanamkan password atau kunci rahasia permanen ke dalam APK.
+
+7. RUANG RAHASIA — PRIVATE VAULT
+
+Buat ruang penyimpanan privat yang terintegrasi di dalam aplikasi.
+
+Jenis file yang didukung:
+
+- Foto.
+- Video.
+- Dokumen.
+- File teks.
+- File ZIP dan arsip lain yang didukung.
+- File umum.
+- Folder dan pengelompokan file.
+
+Fitur wajib:
+
+- Impor file melalui pemilih file Android.
+- Impor foto dan video.
+- Pratinjau file yang kompatibel.
+- Pencarian dan filter.
+- Pengurutan berdasarkan nama, jenis, ukuran, dan waktu.
+- Pilih banyak file sekaligus.
+- Buat folder.
+- Ubah nama, pindahkan, dan hapus file.
+- Pemulihan file jika tersedia melalui tempat sampah.
+- Indikator ukuran file.
+- Indikator kapasitas penyimpanan.
+- Indikator status lokal dan cloud.
+- Progress upload dan download.
+- Pembatalan operasi jika memungkinkan.
+- Retry saat terjadi gangguan.
+- Pemeriksaan integritas file.
+- Penanganan file duplikat.
+- Ekspor atau pemulihan file melalui Storage Access Framework atau MediaStore.
+- Pengaturan waktu penguncian otomatis.
+
+Perlindungan data
+
+- Lindungi Ruang Rahasia dengan autentikasi dan enkripsi.
+- Gunakan Android Keystore untuk melindungi kunci kriptografi jika sesuai.
+- Jangan menyimpan PIN atau password dalam bentuk teks biasa.
+- Jangan menganggap menyembunyikan nama atau ikon file sebagai enkripsi.
+- Jangan menghapus file asli dari perangkat sebelum proses impor atau upload diverifikasi dan pengguna menyetujui penghapusan.
+- Jika file dihapus dari perangkat setelah upload berhasil, pastikan file cloud masih dapat dipulihkan sesuai status sinkronisasi.
+- Jelaskan perbedaan menghapus file lokal, menghapus file cloud, dan menghapus salinan dari semua lokasi.
+- Sediakan konfirmasi sebelum penghapusan permanen.
+
+8. PENYIMPANAN CLOUD OTOMATIS
+
+Saya ingin file yang disimpan dalam Ruang Rahasia tetap tersedia meskipun salinan lokalnya dihapus, aplikasi ditutup, atau aplikasi dipasang ulang, selama file cloud masih tersedia dan pengguna dapat mengakses akun yang benar.
+
+Implementasikan sistem cloud privat yang benar-benar berfungsi.
+
+Fitur cloud
+
+- Upload file.
+- Download file.
+- Sinkronisasi otomatis.
+- Sinkronisasi manual.
+- Status upload dan download.
+- Progress transfer.
+- Retry saat jaringan terputus.
+- Verifikasi integritas.
+- Daftar file cloud.
+- Struktur folder.
+- Pencarian file.
+- Informasi kapasitas.
+- Pemulihan file.
+- Penghapusan file cloud dengan konfirmasi.
+- Deteksi konflik jika file lokal dan cloud berubah.
+- Pemulihan akun dan data yang aman.
+- Pengaturan penggunaan data seluler atau Wi-Fi.
+- Penanganan file besar dan upload yang gagal.
+
+Aturan penting
+
+1. Jangan mengklaim file sudah tersimpan di cloud sebelum server mengonfirmasi keberhasilan dan verifikasi integritas.
+2. Jangan menghapus salinan lokal secara otomatis sebelum pengguna mengaktifkan opsi tersebut dan upload berhasil diverifikasi.
+3. Jelaskan apakah file disimpan lokal, di cloud, atau di kedua tempat.
+4. Lindungi setiap file berdasarkan identitas pemilik yang tervalidasi di backend.
+5. Jangan menggunakan URL file publik permanen.
+6. Gunakan URL bertanda tangan yang kedaluwarsa atau mekanisme transfer privat lain jika didukung.
+7. Jangan menaruh kredensial penyimpanan cloud di APK.
+8. Terapkan enkripsi saat transmisi dan penyimpanan.
+9. Jika menggunakan enkripsi end-to-end, jelaskan bahwa kehilangan kunci dapat menyebabkan file tidak dapat dipulihkan.
+10. Jangan menjanjikan penyimpanan gratis atau tanpa batas.
+
+Gunakan backend API dan object storage privat yang cocok. Tidak perlu membuat website admin.
+
+Jika hosting gratis tidak memenuhi kebutuhan keamanan, kapasitas, atau batas upload, jelaskan alternatif yang realistis. Jangan berpura-pura hosting PHP biasa otomatis menyediakan cloud storage yang aman dan tak terbatas.
+
+9. APP VAULT — MENAMBAHKAN APLIKASI KE RUANG RAHASIA
+
+Buat modul App Vault agar pengguna dapat mengelola akses ke aplikasi tertentu dari dalam Ruang Rahasia.
+
+Fitur yang diinginkan:
+
+- Daftar aplikasi yang terpasang dan dapat diidentifikasi melalui mekanisme Android yang diizinkan.
+- Nama, ikon, dan informasi paket jika tersedia.
+- Pencarian dan filter.
+- Menambahkan aplikasi ke daftar App Vault.
+- Menghapus aplikasi dari daftar App Vault.
+- Kunci akses App Vault dengan biometrik atau PIN.
+- Status kompatibilitas aplikasi.
+- Petunjuk metode penyembunyian yang benar-benar tersedia pada perangkat.
+- Pengaturan notifikasi untuk fitur yang benar-benar didukung.
+- Penjelasan aplikasi mana yang dapat dikunci, disembunyikan dalam launcher, atau ditempatkan di ruang privat sistem.
+
+Persyaratan penyembunyian aplikasi
+
+Saya ingin agar aplikasi yang ditambahkan tidak mudah ditemukan dari tampilan perangkat biasa. Namun, implementasikan hal tersebut hanya melalui metode yang didukung Android dan dapat diuji.
+
+Sebelum implementasi, analisis versi Android dan pilihan teknis berikut:
+
+- Private Space Android pada perangkat yang mendukungnya.
+- Work profile atau profil terkelola jika memang sesuai, diizinkan, dan disetujui pengguna.
+- Launcher khusus yang dapat menyembunyikan ikon hanya di dalam launcher tersebut.
+- Fitur penguncian aplikasi jika perangkat atau sistem operasi mendukungnya.
+- Virtualisasi atau container hanya jika kompatibel, aman, diizinkan, dan benar-benar bisa menjalankan aplikasi yang dimaksud.
+
+Jangan mengklaim bahwa aplikasi Android biasa dapat menyembunyikan aplikasi lain dari seluruh sistem Android. Menyembunyikan ikon dari launcher tidak sama dengan menghilangkan aplikasi dari Settings, daftar aplikasi, penggunaan baterai, notifikasi, atau sistem operasi.
+
+Jangan membuat fitur virtualisasi palsu. Jangan menjanjikan semua aplikasi dapat dijalankan di dalam container, karena aplikasi perbankan, game, Google Play Services, aplikasi dengan pemeriksaan integritas, dan aplikasi tertentu dapat menolak lingkungan tersebut.
+
+Jangan menyalahgunakan Accessibility Service, VPN, izin administrator perangkat, atau izin sensitif untuk mengakali batasan Android.
+
+Notifikasi aplikasi tersembunyi
+
+Sediakan pilihan jika metode yang digunakan mendukungnya:
+
+- Notifikasi aktif.
+- Notifikasi senyap.
+- Notifikasi dinonaktifkan.
+
+Jelaskan bahwa kontrol notifikasi hanya berlaku sejauh diizinkan Android dan aplikasi yang bersangkutan. Jangan menjanjikan notifikasi dapat disembunyikan dari semua permukaan sistem.
+
+Jangan mengirim daftar aplikasi terpasang ke server jika tidak diperlukan. Jika data teknis harus dikirim untuk diagnostik, jelaskan dan minta persetujuan yang sesuai.
+
+10. BIOMETRIK DAN PENGUNCIAN RUANG RAHASIA
+
+Implementasikan autentikasi biometrik Android yang benar menggunakan API resmi yang sesuai, misalnya BiometricPrompt.
+
+Fitur:
+
+- Aktifkan biometrik.
+- Nonaktifkan biometrik.
+- Verifikasi saat membuka Ruang Rahasia.
+- Opsi autentikasi cadangan yang aman.
+- Kunci otomatis setelah aplikasi tidak digunakan.
+- Kunci kembali ketika aplikasi masuk latar belakang jika pengaturan mengharuskannya.
+- Batas percobaan PIN jika PIN digunakan.
+- Penanganan ketika biometrik tidak tersedia.
+- Penanganan ketika pengguna menghapus atau mengubah biometrik perangkat.
+- Pesan kesalahan yang jelas.
+
+Jangan membuat UI biometrik palsu. Autentikasi harus menggunakan API Android asli.
+
+Jangan menyimpan template sidik jari atau data wajah. Android yang menangani verifikasi biometrik; aplikasi hanya menerima hasil autentikasinya.
+
+Lindungi operasi sensitif, termasuk ekspor file, perubahan kredensial, penghapusan permanen, dan pengaturan administrator.
+
+11. PENGATURAN TAMPILAN DAN IDENTITAS APLIKASI
+
+Di Ruang Rahasia, buat menu Pengaturan Aplikasi yang memungkinkan pemilik atau administrator mengelola konfigurasi aplikasi secara terpusat.
+
+Pengaturan yang diinginkan:
+
+- Nama tampilan aplikasi.
+- Judul halaman utama.
+- Deskripsi aplikasi.
+- Logo dan ikon dalam tampilan internal.
+- Avatar atau gambar profil aplikasi.
+- Tema terang dan gelap.
+- Warna utama dan warna aksen.
+- Gambar latar belakang.
+- Tampilan navigasi.
+- Informasi versi.
+- Pesan pengumuman.
+- Teks bantuan.
+- Pengaturan modul fitur.
+- Pengaturan kapasitas pengguna.
+- Pengaturan sinkronisasi.
+- Kebijakan penguncian.
+- Informasi kebijakan privasi.
+- Pengaturan tampilan Ruang Rahasia.
+- Pengaturan opening atau intro.
+
+Konfigurasi global
+
+Saya ingin perubahan pengaturan tertentu dapat berlaku bagi semua pengguna aplikasi yang menggunakan sistem ini.
+
+Untuk itu:
+
+1. Buat sistem konfigurasi jarak jauh melalui backend API.
+2. Aplikasi mengambil konfigurasi terbaru dengan mekanisme cache dan versi konfigurasi.
+3. Terapkan perubahan tanpa harus membangun ulang APK jika perubahan memang bisa dilakukan secara dinamis.
+4. Sediakan nilai default lokal jika server tidak tersedia.
+5. Sediakan validasi dan mekanisme rollback jika konfigurasi tidak valid.
+6. Jangan mengizinkan konfigurasi remote mengeksekusi kode sembarangan.
+7. Jangan menganggap perubahan nama atau ikon internal otomatis mengubah nama dan ikon APK yang tampil di seluruh sistem Android.
+
+Bedakan secara tegas:
+
+- Nama dan judul di dalam aplikasi: dapat diubah melalui konfigurasi remote.
+- Deskripsi dan informasi internal: dapat diubah melalui konfigurasi remote.
+- Logo, gambar, warna, tema, dan opening: dapat diubah jika implementasinya mendukung aset dinamis.
+- Nama aplikasi dan ikon launcher Android: membutuhkan mekanisme khusus yang sesuai atau pembaruan APK; jangan mengklaim dapat diubah bebas dari server jika Android tidak mendukungnya.
+- Package ID aplikasi: tidak boleh dianggap dapat diganti secara remote.
+- Fitur yang membutuhkan perubahan kode native atau izin baru: mungkin membutuhkan pembaruan aplikasi.
+
+Semua perubahan global harus diautentikasi dan diotorisasi oleh backend, bukan hanya disembunyikan di UI.
+
+12. OPENING / INTRO OPSIONAL
+
+Buat fitur intro sebelum tampilan utama.
+
+Pengaturan opening tersedia di Ruang Rahasia:
+
+- Tanpa opening.
+- Gambar.
+- Video.
+- GIF atau animasi yang kompatibel.
+- Durasi tampilan.
+- Opsi melewati opening.
+- Preview sebelum diterapkan.
+- Pengaturan apakah opening hanya ditampilkan saat startup atau sesuai kebijakan yang dipilih.
+
+Opening dapat berasal dari aset lokal atau konfigurasi cloud yang aman.
+
+Persyaratan:
+
+- Jika memilih tanpa opening, aplikasi langsung membuka tampilan utama.
+- Jika aset gagal dimuat, tampilkan fallback dan jangan membuat aplikasi crash.
+- Batasi ukuran dan format aset.
+- Jangan otomatis memutar audio yang mengejutkan pengguna.
+- Jangan mengunduh konten tanpa batas.
+- Gunakan cache agar startup tetap cepat.
+- Perubahan opening dapat diterapkan kepada semua pengguna jika aset dan konfigurasi disediakan melalui backend.
+- Jangan menggunakan opening untuk menutupi error, mengelabui pengguna, atau menjalankan aktivitas tersembunyi.
+
+13. FITUR LAIN YANG DIPERLUKAN DI RUANG RAHASIA
+
+Pilih dan implementasikan fitur dari sistem manajemen sebelumnya yang benar-benar berguna di dalam aplikasi:
+
+- Profil pengguna.
+- Pengaturan akun dan sesi.
+- Pengelolaan perangkat yang terhubung.
+- Status sinkronisasi cloud.
+- Riwayat aktivitas keamanan.
+- Statistik penggunaan.
+- Manajemen kapasitas.
+- Pusat notifikasi.
+- Pengumuman global.
+- Pusat bantuan.
+- Diagnostik dan laporan kesalahan.
+- Pengaturan privasi.
+- Ekspor data pengguna.
+- Penghapusan akun dan data sesuai kebijakan.
+- Informasi versi dan pembaruan aplikasi.
+- Pengaturan keamanan dan biometrik.
+- Pengaturan App Vault.
+- Pengaturan tampilan dan opening.
+- Mode offline dan status koneksi.
+
+Jangan memindahkan semua fitur website secara membabi buta. Pilih hanya fungsi yang relevan bagi aplikasi Android dan yang dapat benar-benar dijalankan.
+
+14. DESAIN UI/UX
+
+Buat desain yang modern, premium, rapi, responsif, dan konsisten.
+
+Arahan visual:
+
+- Tampilan minimalis dengan nuansa teknologi.
+- Navigasi mudah dipahami.
+- Hierarki visual jelas.
+- Animasi ringan dan tidak berlebihan.
+- Kartu informasi yang rapi.
+- Ikon konsisten.
+- Tipografi mudah dibaca.
+- Mendukung ukuran layar Android yang berbeda.
+- Mendukung tema terang dan gelap.
+- Aksesibilitas yang memadai.
+- Status loading, kosong, sukses, dan error yang jelas.
+- Tidak ada tombol dekoratif yang berpura-pura berfungsi.
+- Jangan menggunakan terlalu banyak menu yang membuat pengguna kebingungan.
+
+Susun navigasi utama dan Ruang Rahasia agar mudah digunakan tanpa mengorbankan keamanan.
+
+15. BACKEND API TANPA WEBSITE DAN TANPA DATABASE SQL
+
+Buat backend minimal yang dibutuhkan aplikasi.
+
+Backend boleh menggunakan PHP jika sesuai dengan hosting yang dipilih, tetapi bahasa dan platform harus dipilih berdasarkan stabilitas, keamanan, serta kompatibilitas.
+
+Fungsi backend:
+
+- Registrasi dan validasi username.
+- Manajemen identitas akun dan hak akses.
+- Konfigurasi global aplikasi.
+- Pengiriman konfigurasi.
+- Statistik penggunaan.
+- Catatan aktivitas keamanan.
+- Sinkronisasi file.
+- Penyimpanan metadata cloud.
+- Validasi kepemilikan file.
+- Pengelolaan kapasitas.
+- Pembatasan request.
+- Autentikasi dan sesi.
+- Pencadangan serta pemulihan metadata.
+
+Ketentuan:
+
+- Tidak ada website admin.
+- Tidak ada SQL.
+- Jangan menyediakan endpoint sensitif tanpa autentikasi.
+- Validasi semua input di server.
+- Terapkan rate limiting.
+- Gunakan HTTPS.
+- Terapkan otorisasi di setiap endpoint.
+- Hindari IDOR dan akses silang antarpengguna.
+- Gunakan penulisan atomik, file locking, backup, dan penanganan konflik untuk JSON.
+- Pisahkan metadata dan berkas pengguna.
+- Jangan menyimpan berkas pengguna di direktori publik.
+- Jangan mengembalikan token rahasia dalam respons.
+- Gunakan sesi yang aman dan dapat dicabut.
+- Dokumentasikan batas kemampuan penyimpanan berbasis JSON.
+
+Jika penyimpanan JSON tidak memadai untuk beban yang diperkirakan, jelaskan keterbatasannya dan buat rancangan file-based yang lebih aman tanpa beralih ke SQL. Jangan menjanjikan skalabilitas tanpa batas.
+
+16. KEAMANAN DAN PRIVASI
+
+Lakukan threat modeling untuk aplikasi yang akan dipublikasikan.
+
+Cakup:
+
+- Enkripsi data saat transit.
+- Enkripsi file lokal.
+- Enkripsi file cloud.
+- Perlindungan kunci.
+- Autentikasi dan otorisasi.
+- Perlindungan sesi.
+- Pembatasan percobaan autentikasi.
+- Validasi input.
+- Pencegahan path traversal.
+- Pemeriksaan jenis dan ukuran file.
+- Perlindungan dari akses silang akun.
+- Perlindungan data sensitif di log.
+- Pengamanan konfigurasi global.
+- Penanganan error tanpa membocorkan rahasia.
+- Pencadangan dan pemulihan.
+- Penghapusan akun dan data.
+- Pengelolaan izin Android.
+- Persetujuan pengguna untuk operasi sensitif.
+
+Jangan mengumpulkan data lebih banyak daripada yang diperlukan. Jangan membuat backdoor, akses rahasia yang tidak terdokumentasi, atau mekanisme untuk mengakses file pribadi pengguna tanpa izin yang sah.
+
+Administrator boleh melihat statistik operasional dan metadata yang diperlukan, tetapi jangan memberikan akses otomatis ke isi file pribadi pengguna. Jika fitur dukungan membutuhkan akses tambahan, desain harus transparan, dibatasi, dan memerlukan otorisasi yang sesuai.
+
+17. KINERJA DAN KEANDALAN
+
+Pastikan:
+
+- Startup cepat.
+- Tidak crash ketika offline.
+- Operasi file besar tidak memblokir UI.
+- Upload dan download dapat dipulihkan setelah gangguan.
+- Perubahan konfigurasi tidak merusak aplikasi.
+- Data tidak hilang ketika proses aplikasi dihentikan.
+- Status cloud selalu ditampilkan dengan benar.
+- Proses sinkronisasi tidak menggandakan file tanpa kendali.
+- Pengguna mendapat informasi saat kapasitas penuh.
+- Kesalahan jaringan memiliki pesan dan tindakan pemulihan.
+- Aplikasi tetap dapat menggunakan fitur lokal yang tidak membutuhkan backend saat server tidak tersedia.
+
+Jangan menampilkan status “berhasil” sebelum operasi benar-benar selesai dan terverifikasi.
+
+18. PENGUJIAN WAJIB
+
+Buat rencana pengujian dan jalankan pengujian yang memungkinkan.
+
+Kalkulator
+
+- Prefix /0 sampai /32.
+- Input tidak valid.
+- /31 dan /32.
+- Perhitungan network dan broadcast.
+- Rentang host.
+- Konversi biner.
+
+Ruang Rahasia
+
+- Impor setiap jenis file yang didukung.
+- Pembatalan impor.
+- Penguncian otomatis.
+- Autentikasi gagal.
+- Ekspor file.
+- File rusak.
+- Kapasitas penuh.
+- Pemulihan setelah aplikasi ditutup.
+
+Cloud
+
+- Upload berhasil dan gagal.
+- Jaringan terputus.
+- Upload file besar.
+- Verifikasi integritas.
+- Penghapusan lokal setelah upload terverifikasi.
+- Instal ulang aplikasi.
+- Login kembali.
+- Download dan pemulihan file.
+- Akun lain mencoba mengakses file yang bukan miliknya.
+
+Biometrik
+
+- Perangkat mendukung biometrik.
+- Perangkat tidak mendukung biometrik.
+- Pengguna membatalkan autentikasi.
+- Biometrik berubah atau tidak lagi tersedia.
+- Autentikasi cadangan.
+
+App Vault
+
+- Pemeriksaan kompatibilitas.
+- Aplikasi yang dapat dideteksi.
+- Metode penyembunyian yang benar-benar didukung.
+- Kondisi izin dicabut.
+- Restart perangkat.
+- Pemulihan akses.
+- Notifikasi.
+- Perilaku pada berbagai versi Android.
+- Pastikan tidak mengklaim aplikasi hilang dari seluruh sistem jika hanya ikon launcher yang disembunyikan.
+
+Konfigurasi global
+
+- Perubahan nama tampilan.
+- Perubahan tema dan warna.
+- Perubahan logo.
+- Perubahan opening.
+- Konfigurasi tidak valid.
+- Server tidak tersedia.
+- Cache konfigurasi.
+- Rollback konfigurasi.
+- Pengujian bahwa perubahan berlaku kepada pengguna lain yang benar-benar mengambil konfigurasi dari backend.
+
+Privasi dan statistik
+
+- Username duplikat.
+- Pengguna biasa mencoba membuka statistik administrator.
+- Percobaan akses silang.
+- Pengumpulan IP yang transparan.
+- Penghapusan data sesuai kebijakan.
+- Pastikan tidak ada isi file pribadi yang masuk ke analitik atau log.
+
+Jangan mengaku telah menjalankan pengujian pada perangkat nyata jika belum melakukannya. Pisahkan pengujian yang sudah dijalankan, yang hanya dianalisis, dan yang masih membutuhkan perangkat fisik.
+
+19. HASIL YANG HARUS DIBERIKAN GEMINI
+
+Kerjakan secara bertahap, lengkap, dan dapat diperiksa.
+
+Tahap 1 — Analisis arsitektur
+
+Berikan:
+
+- Arsitektur aplikasi dan backend.
+- Teknologi yang dipilih.
+- Alur autentikasi.
+- Alur penyimpanan lokal dan cloud.
+- Rancangan App Vault yang realistis.
+- Analisis batasan Android.
+- Rancangan statistik dan privasi.
+- Perkiraan kebutuhan hosting serta biaya operasional.
+- Risiko teknis dan cara mengatasinya.
+
+Tahap 2 — Source code Android
+
+Berikan source code lengkap dan terstruktur, termasuk:
+
+- Kalkulator IP.
+- Ruang Rahasia.
+- Login username.
+- Biometrik.
+- Private Vault.
+- App Vault.
+- Cloud sync.
+- Pengaturan tampilan.
+- Opening opsional.
+- Statistik pengguna.
+- Integrasi API.
+- Penanganan error.
+- Pengujian.
+
+Tahap 3 — Backend API
+
+Berikan:
+
+- Source code backend.
+- Struktur direktori.
+- Struktur berkas JSON.
+- Endpoint dan dokumentasinya.
+- Autentikasi dan otorisasi.
+- Konfigurasi global.
+- Penyimpanan metadata cloud.
+- Validasi file.
+- Statistik dan log.
+- Prosedur backup dan pemulihan.
+- Panduan konfigurasi HTTPS.
+
+Jangan menyertakan website admin atau skrip SQL.
+
+Tahap 4 — Build dan instalasi
+
+Berikan:
+
+- Konfigurasi proyek.
+- Daftar dependensi.
+- Cara membuka proyek di Android Studio.
+- Cara menjalankan di emulator atau perangkat Android.
+- Cara membangun APK debug.
+- Cara membangun APK release.
+- Cara menandatangani APK dengan aman.
+- Cara menguji APK sebelum dipublikasikan.
+- Cara mengonfigurasi backend produksi.
+
+Jangan pernah mengarang tautan APK atau menyatakan APK sudah jadi jika belum benar-benar dibuat.
+
+Tahap 5 — Audit final
+
+Buat tabel berisi:
+
+Fitur| Status implementasi| Cara pengujian| Batasan
+Kalkulator IP| Nyata / belum| Langkah pengujian| Keterangan
+Login username| Nyata / belum| Langkah pengujian| Keterangan
+Biometrik| Nyata / belum| Langkah pengujian| Keterangan
+Private Vault| Nyata / belum| Langkah pengujian| Keterangan
+Cloud storage| Nyata / belum| Langkah pengujian| Keterangan
+App Vault| Nyata / belum| Langkah pengujian| Keterangan
+Pengaturan global| Nyata / belum| Langkah pengujian| Keterangan
+Opening opsional| Nyata / belum| Langkah pengujian| Keterangan
+Statistik pengguna| Nyata / belum| Langkah pengujian| Keterangan
+Backend keamanan| Nyata / belum| Langkah pengujian| Keterangan
+
+20. CARA BEKERJA
+
+Jangan mencoba menghasilkan seluruh proyek sekaligus dalam satu jawaban jika hasilnya akan tidak lengkap atau terpotong.
+
+Mulailah dengan analisis arsitektur dan keputusan teknis. Setelah itu, implementasikan proyek secara bertahap dengan struktur berkas yang konsisten.
+
+Setiap kali menghasilkan kode:
+
+1. Sebutkan path dan nama berkas.
+2. Berikan isi berkas yang lengkap, bukan potongan yang tidak dapat dipakai.
+3. Jelaskan dependensi dan konfigurasi yang diperlukan.
+4. Pastikan kode saling terhubung.
+5. Jangan menghilangkan implementasi penting dengan komentar seperti “tambahkan kode di sini”.
+6. Jangan menggunakan data dummy sebagai pengganti fungsi produksi tanpa penjelasan.
+7. Berikan langkah untuk menjalankan dan menguji kode.
+8. Jika ada fitur yang tidak dapat dibuat karena batasan Android atau hosting, jelaskan dan berikan alternatif yang benar-benar mungkin.
+9. Jangan melanjutkan ke tahap berikutnya jika fondasi tahap sebelumnya masih memiliki kesalahan kritis yang belum dijelaskan.
+
+Target akhir: aplikasi Android yang berfungsi nyata, aman, mudah dikembangkan, memiliki kalkulator IP profesional, Ruang Rahasia, Private Vault, App Vault yang realistis, biometrik, cloud privat, pengaturan global yang berlaku bagi pengguna aplikasi, serta statistik penggunaan yang transparan. Tidak ada website admin dan tidak ada database SQL.

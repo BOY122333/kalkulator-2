@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <!-- Glowing Network Nodes / Subnet Ring -->
+    <path
+        android:fillColor="#00000000"
+        android:strokeColor="#0284C7"
+        android:strokeWidth="1.8"
+        android:pathData="M32,38 L54,26 L76,38 L76,64 L54,78 L32,64 Z" />
+    
+    <!-- Shield / Vault body -->
+    <path
+        android:fillColor="#0EA5E9"
+        android:pathData="M54,30 L70,39 C70,55 63,68 54,73 C45,68 38,55 38,39 Z" />
+
+    <!-- Inner Keyhole & Subnet Network Matrix -->
+    <path
+        android:fillColor="#0B132B"
+        android:pathData="M54,44 C51.8,44 50,45.8 50,48 C50,49.5 50.8,50.8 52,51.5 L52,58 L56,58 L56,51.5 C57.2,50.8 58,49.5 58,48 C58,45.8 56.2,44 54,44 Z" />
+
+    <!-- Subnet Binary dots -->
+    <path
+        android:fillColor="#38BDF8"
+        android:pathData="M54,23 A3,3 0 1,1 54,23.01 M32,38 A2.5,2.5 0 1,1 32,38.01 M76,38 A2.5,2.5 0 1,1 76,38.01 M32,64 A2.5,2.5 0 1,1 32,64.01 M76,64 A2.5,2.5 0 1,1 76,64.01 M54,81 A3,3 0 1,1 54,81.01" />
+</vector>
